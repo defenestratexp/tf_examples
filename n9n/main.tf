@@ -43,6 +43,21 @@ resource "aws_security_group" "web_allow_http" {
   }
 }
 
+# A security group for MySQL access
+resource "aws_security_group" "mysql-rds" {
+  name        = "MySQL"
+  description = "Allow MySQL traffic"
+  vpc_id      = "${aws_vpc.nonagon-vpc-1.id}"
+
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.1.0/24"]
+  }
+
+}
+# A security group for SSH access
 resource "aws_security_group" "default" {
   name        = "Default SG"
   description = "Allow SSH access"
